@@ -1,0 +1,206 @@
+body {
+    font-family: verdana;
+}
+
+.overlay_background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+}
+
+#drop_overlay {
+    z-index: 100;
+    visibility: hidden;
+}
+
+#drop_target {
+    background: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    width: 300px;
+    padding: 40px;
+    opacity: .9;
+    margin-left: -150px;
+    margin-top: -80px;
+}
+
+#drop_catcher {
+    background: rgba(0, 0, 0, 0.01);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 110;
+    visibility: hidden;
+}
+
+#import_overlay {
+    visibility: hidden;
+}
+
+#import_panel_content {
+    background: white;
+    margin-left: 10%;
+    margin-right: 10%;
+    height: 100%;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/*LOG AREA*/
+
+#log_list_root {
+    margin-top: 10px;
+    transition: all 0.5s;
+}
+
+.log_list_with_left_panel_expanded {
+    margin-left: 200px;
+}
+
+.log_list_with_left_panel_collapsed {
+    margin-left: 20px;
+}
+
+#left_panel {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    background: #cccccc;
+    transition:all 0.4s;
+}
+
+.left_panel_collapsed{
+    transform: translate3d(-180px, 0px, 0px);
+}
+
+/*LOG ENTRIES*/
+
+.small_gap_row {
+    padding: 0 20pt;
+    color: #888;
+    font-size: 9px;
+}
+
+.big_gap_row {
+    padding: 12px 20pt 20px;
+    background-image: url(../img/split_pattern.png);
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.big_gap_text {
+    color: #555;
+    font-size: 10px;
+    background: white;
+}
+
+.log_entry_root {
+    margin: 0 4px;
+    transform-origin: center left;
+    transition: all 0.3s;
+    max-height: 60px;
+    font-size: 13px;
+    border: solid transparent 1px;
+    overflow: hidden;
+}
+
+.log_entry_root:hover {
+    border: dotted black 1px;
+    overflow: hidden;
+}
+
+.log_entry_selected {
+    transform: scale(1.1);
+    max-height: 8000px;
+    border: double black 3px;
+}
+
+.log_row_type_e {
+    background: rgb(255, 139, 135);
+}
+
+.log_row_type_w {
+    background: rgb(238, 234, 0);
+}
+
+.log_row_type_i {
+    background: rgb(243, 243, 243);
+}
+
+.log_row_type_d {
+    opacity: 0.8;
+    background: rgb(243, 243, 243);
+}
+
+.log_row_type_unknown {
+    opacity: 0.5;
+    background: #f1daf5;
+}
+
+.log_entry_date {
+    font-size: 9px;
+    margin: 0 20px;
+    color: #999;
+    font-weight: 100;
+    padding: 0;
+}
+
+.log_entry_relative_date {
+    font-size: 9px;
+    font-weight: 100;
+    color: #555;
+    margin: 0 20px;
+    padding: 0;
+}
+
+.log_entry_message {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0 20px;
+    padding: 0;
+}
+
+/* SCROLL BAR */
+
+#scrollbar_svg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 15px;
+    height: 100%;
+}
+
+.scroll_bar_line {
+    width: 100%;
+    height: 2px;
+    animation: all 2s;
+}
+
+.scroll_bar_line_e {
+    fill: #F00;
+}
+
+.scroll_bar_line_w {
+    fill: #FC0;
+}
+
+@keyframes scroll_bar_minimize {
+    100% {
+        x: 60%;
+        height: 0.5pt;
+    }
+}
+
+.scroll_bar_line_minimized {
+    animation: scroll_bar_minimize 1s forwards;
+}
