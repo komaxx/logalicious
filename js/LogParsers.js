@@ -195,6 +195,7 @@ iOSConsole.timeStampParser = function(logLine){        // e.g. '10.02 13:27:139 
 iOSConsole.levelParser = function(logLine){
     var ret = logLine.substr(16, 1);
     if (ret==='_') return 'i';
+    if (ret===' ') return 'v';
     return ret.toLocaleLowerCase();
 };
 iOSConsole.messageParser = function(logLine){

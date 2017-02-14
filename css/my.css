@@ -108,7 +108,7 @@ body {
     transform-origin: center left;
     transition: all 0.3s;
     max-height: 60px;
-    font-size: 13px;
+    font-size: 11px;
     border: solid transparent 1px;
     overflow: hidden;
 }
@@ -133,12 +133,12 @@ body {
 }
 
 .log_row_type_i {
-    background: rgb(243, 243, 243);
+    background: rgb(249, 249, 249);
 }
 
 .log_row_type_d {
     opacity: 0.8;
-    background: rgb(243, 243, 243);
+    background: rgb(252, 252, 252);
 }
 
 .log_row_type_unknown {
