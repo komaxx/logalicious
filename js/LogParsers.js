@@ -27,14 +27,13 @@ function LogParser(){
     this.combineEntriesFunc = function(parser, logEntries){ return logEntries; };
 
     this.sortFunc = function(logEntries){
-        logEntries.sort(function(a, b){
+        return logEntries.sort(function(a, b){
             var ret  = a.timeStamp-b.timeStamp;
             if (ret == 0){
                 ret = a.rawLineIndex-b.rawLineIndex;
             }
             return ret;
         });
-        return logEntries;
     };
 
 
