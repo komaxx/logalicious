@@ -228,6 +228,61 @@ iOSConsole.combineEntriesFunc = function(parser, logEntries){
     return ret;
 };
 
+// ///////////////////////////////////////////////////////////////
+// iOS log file parser
+
+var iOSFileParser = new LogParser();
+iOSFileParser.name = "iOSFileParser";
+iOSFileParser.splitFunction = function (rawInput) {
+    return rawInput.split('|v|');
+};
+iOSFileParser.timeStampParser = function(logLine){        // e.g. '10.02 13:27:139 [..]'
+    var day    =logLine.substr(0,2);
+    var month  =logLine.substr(3,2);
+    var hour   =logLine.substr(6,2);
+    var minute =logLine.substr(9,2);
+    var second =logLine.substr(12,2);
+    var ms     =logLine.substr(14,1) + '00';
+
+    var date = new Date(2017, +month - 1, +day, hour, minute, second, ms);
+    return date.getTime();
+};
+iOSFileParser.levelParser = function(logLine){
+    var ret = logLine.substr(16, 1);
+    if (ret==='_') return 'i';
+    if (ret===' ') return 'v';
+    return ret.toLocaleLowerCase();
+};
+iOSFileParser.messageParser = function(logLine){
+    return logLine.substr(18);
+};
+iOSFileParser.sourceParser = function(logLine){
+    return "";
+};
+iOSFileParser.combineEntriesFunc = function(parser, logEntries){
+    var ret = [];
+
+    var currentEntry, testEntry, j;
+    for (var i = 0; i < logEntries.length-1;){
+        currentEntry = logEntries[i];
+        i++;
+
+        if (isPlausibleTimeStamp(currentEntry.timeStamp)){
+            for (j = i; j < logEntries.length; j++){
+                testEntry = logEntries[j];
+                if (!isPlausibleTimeStamp(testEntry.timeStamp)){
+                    currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
+                    i++;
+                } else {
+                    break;
+                }
+            }
+        } // else: the current entry is already bad. Do not attempt to combine;
+        ret.push(currentEntry);
+    }
+
+    return ret;
+};
 
 
 // //////////////////////////////////////////////////////////////
@@ -238,7 +293,7 @@ function chooseParser(rawInput){
     bestCandidate.parser = {};
     bestCandidate.confidence = -1;
 
-    [ androidFileParser, logCatParser, iOSConsole ].forEach(function (logParser){
+    [ androidFileParser, logCatParser, iOSConsole , iOSFileParser ].forEach(function (logParser){
         var nowConfidence = logParser.estimateFitting(rawInput);
         if (nowConfidence > bestCandidate.confidence){
             bestCandidate.parser = logParser;
