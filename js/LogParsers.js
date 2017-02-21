@@ -62,6 +62,8 @@ function LogParser(){
     }
 
     function parseLine(line, parser, lineIndex){
+        if (line === undefined) line = "";
+
         var ret = new LogEntry(line,
             parser.timeStampParser(line),
             parser.levelParser(line),
@@ -180,7 +182,9 @@ iOSConsole.name = "iOSConsoleParser";
 iOSConsole.splitFunction = function (rawInput) {
     return rawInput.split('\n');
 };
-iOSConsole.timeStampParser = function(logLine){        // e.g. '10.02 13:27:139 [..]'
+iOSConsole.timeStampParser = function(logLine){
+
+    // e.g. '10.02 13:27:139 [..]'
     var day    =logLine.substr(0,2);
     var month  =logLine.substr(3,2);
     var hour   =logLine.substr(6,2);
