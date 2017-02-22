@@ -24,7 +24,7 @@ function makeDeltaTimeHtmlString(timeDeltaMs){
 
 
     if (days > 0){
-        deltaString = days + " Tage, ";
+        deltaString = days + " d, ";
     }
     var emphasized = false;
     if (hours > 0){

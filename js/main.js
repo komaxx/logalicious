@@ -56,7 +56,7 @@ function repopulateLogEntryList(log){
     }
 
     if (relativeDateAnchor == 'undefined' || relativeDateAnchor == null){
-        for(var i = 0; i<log.length; i++){
+        for (var i = 0; i<log.length; i++){
             if (log[i].timeStamp){
                 relativeDateAnchor = log[i].timeStamp;
                 break;
@@ -209,7 +209,44 @@ initPasteHandling();
 initImportOverlay();
 initScrollBar();
 
-logEntries = fakeParse();
+logEntries = initParse();
 
 repopulateLogEntryList(logEntries);
 refreshScrollBar(logEntries);
+
+
+
+setTimeout(function(){
+    var regEx = /\[.*\]/;
+
+    var listRoot = document.getElementById("log_list_root");
+    var j=0;
+    for (var i=0; i < listRoot.childNodes.length; i++){
+        var logRow = listRoot.childNodes[i];
+
+        var messageSubNodes = logRow.getElementsByClassName('log_entry_message');
+        if (messageSubNodes === undefined || messageSubNodes.length < 1) continue;
+
+        var messageText = messageSubNodes[0].textContent;
+
+
+        var foundSubStrings = regEx.exec(messageText);
+        if (foundSubStrings!=null && foundSubStrings!==undefined){
+            foundSubStrings.forEach(function(substr){
+                messageText = messageText.replace(substr, substr.bold());
+            });
+            messageSubNodes[0].innerHTML = messageText;
+        }
+
+        /*
+        var nuText = "";
+        var splits = messageText.split(' ');
+        for (j = 0; j < splits.length; j++){
+            if (j%2==0) splits[j] = splits[j].bold();
+            nuText = nuText+ splits[j] + " ";
+        }
+
+        messageSubNodes[0].innerHTML = nuText;
+        //*/
+    }
+}, 10000);

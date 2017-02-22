@@ -313,7 +313,7 @@ function chooseParser(rawInput){
 // dev / debug
 
 
-function fakeParse(){
+function initParse(){
     var ret = [];
     var nowTime = Date.now();
 
