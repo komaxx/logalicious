@@ -1,26 +1,23 @@
 
 function createLogEntryRow(){
+    var dateString = "";        // stored to be reset if relative date is removed
+
     var rowRootNode = document.createElement("DIV");
 
-    var topLine = document.createElement("DIV");
-    rowRootNode.appendChild(topLine);
-
-    var dateNode = document.createElement("SPAN");
+    var dateNode = document.createElement("DIV");
     dateNode.setAttribute("class", "log_entry_date");
-    topLine.appendChild(dateNode);
-    rowRootNode.setDate = function (dateString){
-        dateNode.textContent = dateString;
+    rowRootNode.appendChild(dateNode);
+    rowRootNode.setDate = function (dateTxt){
+        dateString = dateTxt;
+        dateNode.textContent = dateTxt;
     };
 
-    var relativeDateNode = document.createElement("SPAN");
-    relativeDateNode.setAttribute("class", "log_entry_relative_date");
-    topLine.appendChild(relativeDateNode);
     rowRootNode.setRelativeDate = function (relativeDateMs) {
-        if (relativeDateMs == "") relativeDateNode.innerHTML = "";
-        else relativeDateNode.innerHTML = makeDeltaTimeHtmlString(relativeDateMs);
+        if (relativeDateMs === "") dateNode.innerHTML = dateString;
+        else dateNode.innerHTML = makeDeltaTimeHtmlString(relativeDateMs);
     };
 
-    var messageNode = document.createElement("SPAN");
+    var messageNode = document.createElement("DIV");
     messageNode.setAttribute("class", "log_entry_message");
     rowRootNode.appendChild(messageNode);
     rowRootNode.setMessage = function (messageString) {

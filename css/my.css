@@ -106,10 +106,10 @@ body {
 .log_entry_root {
     margin: 0 4px;
     transform-origin: center left;
-    transition: all 0.15s;
+    transition: all 0.1s;
     max-height: 60px;
     font-size: 11px;
-    border: solid transparent 1px;
+    border: solid white 1px;
     overflow: hidden;
 }
 
@@ -119,9 +119,8 @@ body {
 }
 
 .log_entry_selected {
-    transform: scale(1.1);
     max-height: 8000px;
-    border: double black 3px;
+    border: solid black 2px;
 }
 
 .log_row_type_e {
@@ -147,25 +146,19 @@ body {
 }
 
 .log_entry_date {
+    float: left;
     font-size: 9px;
-    margin: 0 20px;
+    margin: 3px 2px 0px 10px;
     color: #999;
     font-weight: 100;
-    padding: 0;
-}
-
-.log_entry_relative_date {
-    font-size: 9px;
-    font-weight: 100;
-    color: #999;
-    margin: 0 20px;
     padding: 0;
 }
 
 .log_entry_message {
+    position: relative;
     font-size: 12px;
     font-weight: normal;
-    margin: 0 20px;
+    margin: 0 10px 0px 110px;
     padding: 0;
 }
 

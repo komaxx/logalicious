@@ -24,7 +24,30 @@ function LogParser(){
      * With some log entry separators, it's possible that single lines were separated.
      * This function tries to estimate if that's the case.
      */
-    this.combineEntriesFunc = function(parser, logEntries){ return logEntries; };
+    this.combineEntriesFunc = function(parser, logEntries){
+        var ret = [];
+
+        var currentEntry, testEntry, j;
+        for (var i = 0; i < logEntries.length-1;){
+            currentEntry = logEntries[i];
+            i++;
+
+            if (isPlausibleTimeStamp(currentEntry.timeStamp)){
+                for (j = i; j < logEntries.length; j++){
+                    testEntry = logEntries[j];
+                    if (!isPlausibleTimeStamp(testEntry.timeStamp)){
+                        currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
+            } // else: the current entry is already bad. Do not attempt to combine;
+            ret.push(currentEntry);
+        }
+
+        return ret;
+    };
 
     this.sortFunc = function(logEntries){
         return logEntries.sort(function(a, b){
@@ -172,6 +195,7 @@ logCatParser.messageParser = function(logLine){
 logCatParser.sourceParser = function(logLine){
     return "";
 };
+
 
 
 // ///////////////////////////////////////////////////////////////

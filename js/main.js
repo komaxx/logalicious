@@ -34,6 +34,7 @@ function rowClicked(){
 
     if (selectedLogEntryId == this.id){ // unselected
         selectedLogEntryId = "";
+        relativeDateAnchor = null;
     } else {
         selectedLogEntryId = this.id;
         addClass(this, "log_entry_selected");
@@ -215,12 +216,11 @@ repopulateLogEntryList(logEntries);
 refreshScrollBar(logEntries);
 
 
-
+// testing...
 setTimeout(function(){
-    var regEx = /\[.*\]/;
+    var regEx = /\[.*?\]/;
 
     var listRoot = document.getElementById("log_list_root");
-    var j=0;
     for (var i=0; i < listRoot.childNodes.length; i++){
         var logRow = listRoot.childNodes[i];
 
@@ -229,24 +229,16 @@ setTimeout(function(){
 
         var messageText = messageSubNodes[0].textContent;
 
-
         var foundSubStrings = regEx.exec(messageText);
-        if (foundSubStrings!=null && foundSubStrings!==undefined){
-            foundSubStrings.forEach(function(substr){
-                messageText = messageText.replace(substr, substr.bold());
-            });
+        if (foundSubStrings!=null && foundSubStrings!==undefined && foundSubStrings.length > 0){
+
+            messageText = messageText.replace(foundSubStrings[0], foundSubStrings[0].bold);
+
+            // foundSubStrings.forEach(function(substr){
+            //     messageText = messageText.replace(substr, substr.bold());
+            // });
+
             messageSubNodes[0].innerHTML = messageText;
         }
-
-        /*
-        var nuText = "";
-        var splits = messageText.split(' ');
-        for (j = 0; j < splits.length; j++){
-            if (j%2==0) splits[j] = splits[j].bold();
-            nuText = nuText+ splits[j] + " ";
-        }
-
-        messageSubNodes[0].innerHTML = nuText;
-        //*/
     }
 }, 10000);
