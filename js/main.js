@@ -66,7 +66,7 @@ function repopulateLogEntryList(log){
     }
 
     // adding
-    var addTask = new ProcessTask(log, 10);
+    var addTask = new ProcessTask(log, 100);
     addTask.perEntryFunction = function(log, index){
         var entry = log[index];
         var lastEntry = index<1 ? entry : log[index-1];
