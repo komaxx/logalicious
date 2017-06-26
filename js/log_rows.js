@@ -54,16 +54,18 @@ function setupRowFromLogEntry(rowRoot, logEntry) {
     rowRoot.setMessage(logEntry.message);
 }
 
-function createBigGapRow(timeDeltaMs){
+function createBigGapRow(timeDeltaMs, entryTimeStamp){
     var rowRootNode = document.createElement("DIV");
     rowRootNode.setAttribute("class", 'big_gap_row');
-
 
     var textNode = document.createElement("SPAN");
     textNode.setAttribute('class', 'big_gap_text');
     rowRootNode.appendChild(textNode);
 
-    textNode.innerHTML = "[[ " + makeDeltaTimeHtmlString(timeDeltaMs) + " ]]";
+    var date = new Date(+entryTimeStamp);
+    var dateString = date.toDateString();
+
+    textNode.innerHTML = "[[ " + makeDeltaTimeHtmlString(timeDeltaMs) + " "+ dateString +" ]]";
 
     return rowRootNode;
 }

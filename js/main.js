@@ -14,7 +14,7 @@ function getLogEntryForId(id){
 
 function reassignRelativeDates(){
     var row;
-    if (relativeDateAnchor == 'undefined' || relativeDateAnchor == null){
+    if (relativeDateAnchor === 'undefined' || relativeDateAnchor === null){
         logEntries.forEach(function(entry){
             row = document.getElementById(entry.id);
             row.setRelativeDate("");
@@ -32,7 +32,7 @@ function rowClicked(){
 
     removeClass(document.getElementById(selectedLogEntryId), "log_entry_selected");
 
-    if (selectedLogEntryId == this.id){ // unselected
+    if (selectedLogEntryId === this.id){ // unselected
         selectedLogEntryId = "";
         relativeDateAnchor = null;
     } else {
@@ -40,7 +40,7 @@ function rowClicked(){
         addClass(this, "log_entry_selected");
 
         var selectedLogEntry = getLogEntryForId(selectedLogEntryId);
-        if (selectedLogEntry != null && selectedLogEntry.timeStamp){
+        if (selectedLogEntry !== null && selectedLogEntry.timeStamp){
             relativeDateAnchor = selectedLogEntry.timeStamp;
         } else {
             relativeDateAnchor = null;
@@ -56,7 +56,7 @@ function repopulateLogEntryList(log){
         listRoot.removeChild(listRoot.lastChild);
     }
 
-    if (relativeDateAnchor == 'undefined' || relativeDateAnchor == null){
+    if (relativeDateAnchor === 'undefined' || relativeDateAnchor === null){
         for (var i = 0; i<log.length; i++){
             if (log[i].timeStamp){
                 relativeDateAnchor = log[i].timeStamp;
@@ -82,9 +82,9 @@ function repopulateLogEntryList(log){
 
         // if delta-time larger than x insert a snip row
         var delta = +entry.timeStamp - +lastEntry.timeStamp;
-        if (!isNaN(delta) && delta < 100000000){
+        if (!isNaN(delta)){
             if (delta > 800){
-                var bigGapRow = createBigGapRow(delta);
+                var bigGapRow = createBigGapRow(delta, entry.timeStamp);
                 if (delta < 5*60*1000){
                     bigGapRow.style.background= "none";
                 }
@@ -230,7 +230,7 @@ setTimeout(function(){
         var messageText = messageSubNodes[0].textContent;
 
         var foundSubStrings = regEx.exec(messageText);
-        if (foundSubStrings!=null && foundSubStrings!==undefined && foundSubStrings.length > 0){
+        if (foundSubStrings!==null && foundSubStrings!==undefined && foundSubStrings.length > 0){
 
             messageText = messageText.replace(foundSubStrings[0], foundSubStrings[0].bold);
 

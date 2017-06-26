@@ -5,7 +5,7 @@ function isPlausibleTimeStamp(testTimeStamp){
     if (isNaN(testMS) || !isFinite(testMS)) return false;
 
     var nowMs = (new Date()).getTime();
-    var upperBound = nowMs + (3*60*60*1000);
+    var upperBound = nowMs + (24*60*60*1000);
     var lowerBound = nowMs - (365 * 24*60*60*1000);
     return (testMS<upperBound) && (testMS>lowerBound);
 }
