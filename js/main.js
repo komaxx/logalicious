@@ -76,6 +76,9 @@ function repopulateLogEntryList(log){
 
         nuNode.addEventListener('click', rowClicked);
 
+        if (index < 1){
+            createBigGapRow(0, entry.timeStamp);
+        }
 
         var marginTopUnitless = 0;
         var insertedRowHeight = 0;

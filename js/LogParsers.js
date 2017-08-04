@@ -240,7 +240,7 @@ iOSConsole.combineEntriesFunc = function(parser, logEntries){
         i++;
 
         if (isPlausibleTimeStamp(currentEntry.timeStamp)){
-            for (j = i; j < logEntries.length; j++){
+            for (j = i+1; j < logEntries.length; j++){
                 testEntry = logEntries[j];
                 if (!isPlausibleTimeStamp(testEntry.timeStamp)){
                     currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
@@ -296,7 +296,7 @@ iOSFileParser.combineEntriesFunc = function(parser, logEntries){
         i++;
 
         if (isPlausibleTimeStamp(currentEntry.timeStamp)){
-            for (j = i; j < logEntries.length; j++){
+            for (j = i+1; j < logEntries.length; j++){
                 testEntry = logEntries[j];
                 if (!isPlausibleTimeStamp(testEntry.timeStamp)){
                     currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
