@@ -52,7 +52,7 @@ function LogParser(){
     this.sortFunc = function(logEntries){
         return logEntries.sort(function(a, b){
             var ret  = a.timeStamp-b.timeStamp;
-            if (ret == 0){
+            if (ret === 0){
                 ret = a.rawLineIndex-b.rawLineIndex;
             }
             return ret;
@@ -117,14 +117,14 @@ function LogParser(){
 
     this.removeEmptyLogEntries = function (logEntries) {
         return logEntries.filter(function(entry){
-            return (entry.id.trim().length > 5)
+            return (entry.id.trim().length > 0)
         });
     };
 
     this.parseAll = function(rawInput){
         var logLines = this.splitFunction(rawInput);
         logLines = logLines.filter(function ignoreEmptyLines(line){
-            return line.trim().length > 1;
+            return line.trim().length > 0;
         });
 
         // actual parsing
@@ -183,6 +183,12 @@ logCatParser.timeStampParser = function(logLine){
     var second =logLine.substr(12,2);
     var ms     =logLine.substr(15,3);
 
+    if (day.trim().length < 1) return NaN;
+    if (month.trim().length < 1) return NaN;
+    if (hour.trim().length < 1) return NaN;
+    if (minute.trim().length < 1) return NaN;
+    if (second.trim().length < 1) return NaN;
+
     var date = new Date(2017, +month - 1, +day, hour, minute, second, ms);
     return date.getTime();
 };
@@ -210,12 +216,22 @@ iOSConsole.timeStampParser = function(logLine){
 
     // e.g. '10.02 13:27:139 [..]'
     var day    =logLine.substr(0,2);
+    if (day.trim().length < 1) return NaN;
+
     var month  =logLine.substr(3,2);
+    if (month.trim().length < 1) return NaN;
+
     var hour   =logLine.substr(6,2);
+    if (hour.trim().length < 1) return NaN;
+
     var minute =logLine.substr(9,2);
+    if (minute.trim().length < 1) return NaN;
+
     var second =logLine.substr(12,2);
     var ms     =logLine.substr(14,1) + '00';
 
+
+    //TODO: Fetch the current year from the system. Or: Do something smarter
     var date = new Date(2017, +month - 1, +day, hour, minute, second, ms);
     return date.getTime();
 };
@@ -235,12 +251,12 @@ iOSConsole.combineEntriesFunc = function(parser, logEntries){
     var ret = [];
 
     var currentEntry, testEntry, j;
-    for (var i = 0; i < logEntries.length-1;){
+    for (var i = 0; i < logEntries.length;){
         currentEntry = logEntries[i];
         i++;
 
         if (isPlausibleTimeStamp(currentEntry.timeStamp)){
-            for (j = i+1; j < logEntries.length; j++){
+            for (j = i; j < logEntries.length; j++){
                 testEntry = logEntries[j];
                 if (!isPlausibleTimeStamp(testEntry.timeStamp)){
                     currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
@@ -272,6 +288,12 @@ iOSFileParser.timeStampParser = function(logLine){        // e.g. '10.02 13:27:1
     var second =logLine.substr(12,2);
     var ms     =logLine.substr(14,1) + '00';
 
+    if (day.trim().length < 1) return NaN;
+    if (month.trim().length < 1) return NaN;
+    if (hour.trim().length < 1) return NaN;
+    if (minute.trim().length < 1) return NaN;
+    if (second.trim().length < 1) return NaN;
+
     var date = new Date(2017, +month - 1, +day, hour, minute, second, ms);
     return date.getTime();
 };
@@ -296,7 +318,7 @@ iOSFileParser.combineEntriesFunc = function(parser, logEntries){
         i++;
 
         if (isPlausibleTimeStamp(currentEntry.timeStamp)){
-            for (j = i+1; j < logEntries.length; j++){
+            for (j = i; j < logEntries.length; j++){
                 testEntry = logEntries[j];
                 if (!isPlausibleTimeStamp(testEntry.timeStamp)){
                     currentEntry.message = currentEntry.message +"  "+ testEntry.rawLine;
